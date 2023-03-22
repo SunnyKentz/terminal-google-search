@@ -104,6 +104,10 @@ def findTitle(div:str)->str:
             break
     title = div[start:end]
 
+    formatedAnswer = removeUnwantedChars(title)
+
+    return formatedAnswer
+
     return title
 
 def findAnswer(divs:list,resultType:int,index:int)->str:
@@ -129,8 +133,15 @@ def findAnswer(divs:list,resultType:int,index:int)->str:
                 answer = answer + div[start:end]
             except:
                 break
+    formatedAnswer = removeUnwantedChars(answer)
+    return formatedAnswer
 
-    return answer
+def removeUnwantedChars(answer:str)->str:
+    formatedAnswer = ""
+    for line in answer.split():
+        new_words = ' '.join([word for word in line.split() if not any([phrase in word for phrase in ["&#","&gt;","&amp;"]])])
+        formatedAnswer = formatedAnswer + new_words + " "
+    return formatedAnswer
 
 def findWebsite(divs:list,resultType:int,index:int)->str:
 
